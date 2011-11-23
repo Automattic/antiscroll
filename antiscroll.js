@@ -7,9 +7,11 @@
 
   $.fn.antiscroll = function (options) {
     return this.each(function () {
-      if (!$(this).data('antiscroll')) {
-        $(this).data('antiscroll', new $.Antiscroll(this, options));
+      if ($(this).data('antiscroll')) {
+        $(this).data('antiscroll').destroy();
       }
+
+      $(this).data('antiscroll', new $.Antiscroll(this, options));
     });
   };
 
@@ -47,6 +49,23 @@
   }
 
   /**
+   * Cleans up.
+   *
+   * @return {Antiscroll} for chaining
+   * @api public
+   */
+
+  Antiscroll.prototype.destroy = function () {
+    if (this.horizontal) {
+      this.horizontal.destroy();
+    }
+    if (this.vertical) {
+      this.vertical.destroy();
+    }
+    return this;
+  };
+
+  /**
    * Scrolbar constructor.
    *
    * @param {Element|jQuery} element
@@ -79,6 +98,18 @@
     var self = this;
     this.show();
     this.hiding = setTimeout($.proxy(this, 'hide'), 3000);
+  };
+
+  /**
+   * Cleans up.
+   *
+   * @return {Scrollbar} for chaining
+   * @api public
+   */
+
+  Scrollbar.prototype.destroy = function () {
+    this.el.remove();
+    return this;
   };
 
   /**
