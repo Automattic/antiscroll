@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Antiscroll demo</title>
+    <link href="antiscroll.css" rel="stylesheet" />
+
+    <style>
+      .box {
+        background: #eee;
+      }
+
+      .box, .box .antiscroll-inner {
+        width: 250px;
+        height: 250px;
+        font: 14px Helvetica, Arial;
+      }
+
+      .box-inner {
+        background: #eee;
+        padding: 10px;
+        color: #999;
+      }
+
+      .box-inner p {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+
+    <script src="deps/jquery.js"></script>
+    <script src="deps/jquery-mousewheel.js"></script>
+    <script src="antiscroll.js"></script>
+
+    <script>
+      $(function () {
+        $('.box-wrap').antiscroll();
+      });
+    </script>
+  </head>
+  <body>
+    <div class="box-wrap antiscroll-wrap">
+      <div class="box">
+        <div class="antiscroll-inner">
+          <div class="box-inner">
+            <p>Content</p><p>Content</p><p>Content</p><p>Content</p><p>Content</p>
+            <p>Content</p><p>Content</p><p>Content</p><p>Content</p><p>Content</p>
+            <p>Content</p><p>Content</p><p>Content</p><p>Content</p><p>Content</p>
+            <p>aadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdiadsjsaiajsiajsdiasjdidsjsaiajsiajsdiasjdi</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
