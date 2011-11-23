@@ -15,6 +15,7 @@
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   -webkit-transition: linear 300ms opacity;
   -moz-transition: linear 300ms opacity;
+  -o-transition: linear 300ms opacity;
 }
 
 .antiscroll-scrollbar-shown {
