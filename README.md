@@ -34,7 +34,7 @@ action.
 
 **IE 9 `overflow: scroll` and antiscroll**
 
-![](http://f.cl.ly/items/0r2C1o2K432S2T0c0W1n/Image%202011.11.23%2010:33:19%20AM.png)
+![](http://f.cl.ly/items/0M0z2t2X42110X3R0313/Image%202011.11.23%2010:35:39%20AM.png)
 
 ## How does it work?
 
