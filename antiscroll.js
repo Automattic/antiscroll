@@ -146,7 +146,11 @@
   Scrollbar.prototype.scroll = function () {
     if (!this.shown) {
       this.show();
+      if (!this.enter && !this.dragging) {
+        this.hiding = setTimeout($.proxy(this, 'hide'), 1500);
+      }
     }
+
     this.update();
   };
 
