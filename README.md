@@ -19,6 +19,7 @@ the scrollbars popularized by OS X Lion that retains native properties.
 - Shows scrollbars upon hovering.
 - Scrollbars are draggable.
 - Size of container can be dynamically adjusted and scrollbars will adapt.
+- Supports IE7+, Firefox 3+, Chrome, Safari
 
 ## Demo
 
