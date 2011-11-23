@@ -57,7 +57,7 @@ consists of declaring `::-webkit-scrollbar` and `::scrollbar` CSS
 pseudo-properties that set the width of the scrollbars to zero for modern
 browsers.
 
-### 2. Adjust the width of the wrapper element
+### 2. Adjust the width of the inner element
 
 The parent element receives `overflow: hidden` and the desired width and height
 for the widget.
