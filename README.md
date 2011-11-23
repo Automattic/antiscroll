@@ -98,6 +98,7 @@ Sharp](http://jdsharp.us/jQuery/minute/calculate-scrollbar-width.php).
 - Automatically leverage Joe Hewitt's
   [scrollability](https://github.com/joehewitt/scrollability) as a replacement
   technique if a touch-enabled browser is detected.
+- IE6 support
 
 ## License 
 
