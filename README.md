@@ -65,7 +65,7 @@ The inner `.antiscroll-inner` element receives the same width and height, but
 the script augments this two values with the size of the scrollbars,
 effectively hiding them.
 
-![](http://f.cl.ly/items/24360B0v0B411810353f/Image%202011.11.23%208:28:23%20AM.png)
+![](http://f.cl.ly/items/431G35281X3t052m3J1V/Image%202011.11.23%2010:42:52%20AM.png)
 
 The inner element is always `overflow: scroll`.
 
