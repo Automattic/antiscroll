@@ -34,6 +34,7 @@
     this.options = opts || {};
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
     this.inner = this.el.find('.antiscroll-inner');
+    this.originalStyles = this.inner.attr('style') || '';
     this.inner.css({
         'width': '+=' + scrollbarSize()
       , 'height': '+=' + scrollbarSize()
@@ -66,7 +67,21 @@
   };
 
   /**
-   * Scrolbar constructor.
+   * Rebuild Antiscroll.
+   *
+   * @return {Antiscroll} for chaining
+   * @api public
+   */
+
+  Antiscroll.prototype.rebuild = function () {
+    this.destroy();
+    this.inner.attr('style', this.originalStyles);
+    Antiscroll.call(this, this.el, this.options);
+    return this;
+  };
+
+  /**
+   * Scrollbar constructor.
    *
    * @param {Element|jQuery} element
    * @api public
@@ -269,7 +284,7 @@
     // minimum top is 0, maximum is the track height
     var y = Math.min(Math.max(pos, 0), trackWidth - barWidth)
 
-    innerEl.scrollLeft = (innerEl.scrollWidth - this.pane.el.width()) 
+    innerEl.scrollLeft = (innerEl.scrollWidth - this.pane.el.width())
       * y / (trackWidth - barWidth)
   };
 
@@ -280,8 +295,8 @@
    */
 
   Scrollbar.Horizontal.prototype.mousewheel = function (ev, delta, x, y) {
-    if ((x < 0 && 0 == this.pane.inner.get(0).scrollLeft) || 
-        (x > 0 && (this.innerEl.scrollLeft + this.pane.el.width() 
+    if ((x < 0 && 0 == this.pane.inner.get(0).scrollLeft) ||
+        (x > 0 && (this.innerEl.scrollLeft + this.pane.el.width()
           == this.innerEl.scrollWidth))) {
       ev.preventDefault();
       return false;
@@ -337,7 +352,7 @@
     // minimum top is 0, maximum is the track height
     var y = Math.min(Math.max(pos, 0), trackHeight - barHeight)
 
-    innerEl.scrollTop = (innerEl.scrollHeight - paneHeight) 
+    innerEl.scrollTop = (innerEl.scrollHeight - paneHeight)
       * y / (trackHeight - barHeight)
   };
 
@@ -348,8 +363,8 @@
    */
 
   Scrollbar.Vertical.prototype.mousewheel = function (ev, delta, x, y) {
-    if ((y > 0 && 0 == this.innerEl.scrollTop) || 
-        (y < 0 && (this.innerEl.scrollTop + this.pane.el.height() 
+    if ((y > 0 && 0 == this.innerEl.scrollTop) ||
+        (y < 0 && (this.innerEl.scrollTop + this.pane.el.height()
           == this.innerEl.scrollHeight))) {
       ev.preventDefault();
       return false;
