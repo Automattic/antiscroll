@@ -34,7 +34,6 @@
     this.options = opts || {};
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
     this.inner = this.el.find('.antiscroll-inner');
-    this.originalStyles = this.inner.attr('style') || '';
     this.inner.css({
         'width': '+=' + scrollbarSize()
       , 'height': '+=' + scrollbarSize()
@@ -75,7 +74,7 @@
 
   Antiscroll.prototype.rebuild = function () {
     this.destroy();
-    this.inner.attr('style', this.originalStyles);
+    this.inner.attr('style', '');
     Antiscroll.call(this, this.el, this.options);
     return this;
   };
