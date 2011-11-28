@@ -95,9 +95,12 @@
     this.pane.inner.bind('mousewheel', $.proxy(this, 'mousewheel'));
 
     // show
-    var self = this;
-    this.show();
-    this.hiding = setTimeout($.proxy(this, 'hide'), 3000);
+    var initialDisplay = this.pane.options.initialDisplay;
+
+    if (initialDisplay !== false) {
+      this.show();
+      this.hiding = setTimeout($.proxy(this, 'hide'), parseInt(initialDisplay, 10) || 3000);
+    }
   };
 
   /**
