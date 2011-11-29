@@ -71,14 +71,14 @@
 
     // hovering
     // TODO: Emulate mouseenter/mouseleave events.
-    this.pane.el.addEventListener('mouseover', proxy(this, 'mouseenter'), false);
-    this.pane.el.addEventListener('mouseout', proxy(this, 'mouseleave'), false);
+    addEvent(this.pane.el, 'mouseover', proxy(this, 'mouseenter'));
+    addEvent(this.pane.el, 'mouseout', proxy(this, 'mouseleave'));
 
     // dragging
-    this.el.addEventListener('mousedown', proxy(this, 'mousedown'), false);
+    addEvent(this.el, 'mousedown', proxy(this, 'mousedown'));
 
     // scrolling
-    this.pane.inner.addEventListener('scroll', proxy(this, 'scroll'), false);
+    addEvent(this.pane.inner, 'scroll', proxy(this, 'scroll'));
 
     // wheel -optional-
     // TODO: Remove?
@@ -168,17 +168,18 @@
       , move = proxy(this, 'mousemove')
       , self = this
 
-    document.addEventListener('mousemove', move, false);
-    document.addEventListener('mouseup', function() {
+    addEvent(document, 'mousemove', move);
+    addEvent(document, 'mouseup', function() {
       self.dragging = false;
 
       document.onselectstart = null;
-      document.removeEventListener('mousemove', move, false);
+
+      removeEvent(document, 'mousemove', move);
 
       if (!self.enter) {
         self.hide();
       }
-    }, false);
+    });
   };
 
   /**
@@ -392,13 +393,29 @@
     return size;
   };
 
+  function addEvent (el, name, fn) {
+    if (el.addEventListener) {
+      el.addEventListener(name, fn, false);
+    } else if (el.attachEvent) {
+      el.attachEvent('on' + name, fn);
+    }
+  };
+
+  function removeEvent (el, name, fn) {
+    if (el.removeEventListener) {
+      el.removeEventListener(name, fn, false);
+    } else if (el.detachEvent) {
+      el.detachEvent('on' + name, fn);
+    }
+  };
+
   function getWidth (el) {
     return el.getBoundingClientRect().width;
-  }
+  };
 
   function getHeight (el) {
     return el.getBoundingClientRect().height;
-  }
+  };
 
   function proxy (fn, context) {
     if (typeof context === 'string') {
