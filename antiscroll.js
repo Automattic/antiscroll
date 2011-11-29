@@ -19,7 +19,7 @@
     this.el = el;
     this.options = opts || {};
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
-    this.inner = this.el.querySelector('.antiscroll-inner');
+    this.inner = this.el.getElementsByClassName('antiscroll-inner')[0];
 
     var width = parseInt(this.inner.style.width, 10)
       , height = parseInt(this.inner.style.height, 10);
@@ -370,7 +370,7 @@
 
   function scrollbarSize () {
     if (!size) {
-      var body = document.querySelector('body')
+      var body = document.getElementsByTagName('body')[0]
         , div = body.appendChild(document.createElement('div'));
 
       div.innerHTML = '<div style="width:50px;height:50px;overflow:hidden;'
