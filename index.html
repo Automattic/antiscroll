@@ -23,7 +23,7 @@
         height: 250px;
         font: 14px Helvetica, Arial;
       }
-      
+
       .box-wrap {
         margin: 20px 40px;
         border: 1px solid #999;
@@ -115,14 +115,12 @@
       }
     </style>
 
-    <script src="deps/jquery.js"></script>
-    <script src="deps/jquery-mousewheel.js"></script>
     <script src="antiscroll.js"></script>
 
     <script>
-      $(function () {
-        $('.box-wrap').antiscroll();
-      });
+      window.addEventListener('load', function() {
+        var scroll = new Antiscroll(document.querySelector('.box-wrap'));
+      }, false);
     </script>
   </head>
   <body>
