@@ -448,4 +448,4 @@
     };
   };
 
-})(jQuery);
+})(window.jQuery);
