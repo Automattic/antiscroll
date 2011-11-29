@@ -2,6 +2,22 @@
 (function ($) {
 
   /**
+   * Augment jQuery prototype.
+   */
+
+  if ($) {
+    $.fn.antiscroll = function (options) {
+      return this.each(function () {
+        if ($(this).data('antiscroll')) {
+          $(this).data('antiscroll').destroy();
+        }
+
+        $(this).data('antiscroll', new $.Antiscroll(this, options));
+      });
+    };
+  }
+
+  /**
    * Expose constructor.
    */
 
@@ -432,4 +448,4 @@
     };
   };
 
-})();
+})(jQuery);
