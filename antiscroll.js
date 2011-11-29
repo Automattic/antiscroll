@@ -82,24 +82,23 @@
     this.shown = false;
 
     // hovering
-    this.pane.el.mouseenter($.proxy(this, 'mouseenter'));
-    this.pane.el.mouseleave($.proxy(this, 'mouseleave'));
+    this.pane.el.one('mouseover', proxy(this, 'mouseenter'));
 
     // dragging
-    this.el.mousedown($.proxy(this, 'mousedown'));
+    this.el.mousedown(proxy(this, 'mousedown'));
 
     // scrolling
-    this.pane.inner.scroll($.proxy(this, 'scroll'));
+    this.pane.inner.scroll(proxy(this, 'scroll'));
 
     // wheel -optional-
-    this.pane.inner.bind('mousewheel', $.proxy(this, 'mousewheel'));
+    this.pane.inner.bind('mousewheel', proxy(this, 'mousewheel'));
 
     // show
     var initialDisplay = this.pane.options.initialDisplay;
 
     if (initialDisplay !== false) {
       this.show();
-      this.hiding = setTimeout($.proxy(this, 'hide'), parseInt(initialDisplay, 10) || 3000);
+      this.hiding = setTimeout(proxy(this, 'hide'), parseInt(initialDisplay, 10) || 3000);
     }
   };
 
@@ -122,6 +121,7 @@
    */
 
   Scrollbar.prototype.mouseenter = function () {
+    this.pane.el.one('mouseout', proxy(this, 'mouseleave'));
     this.enter = true;
     this.show();
   };
@@ -133,6 +133,7 @@
    */
 
   Scrollbar.prototype.mouseleave = function () {
+    this.pane.el.one('mouseover', proxy(this, 'mouseenter'));
     this.enter = false;
 
     if (!this.dragging) {
@@ -150,7 +151,7 @@
     if (!this.shown) {
       this.show();
       if (!this.enter && !this.dragging) {
-        this.hiding = setTimeout($.proxy(this, 'hide'), 1500);
+        this.hiding = setTimeout(proxy(this, 'hide'), 1500);
       }
     }
 
@@ -175,7 +176,7 @@
     document.onselectstart = function () { return false; };
 
     var pane = this.pane
-      , move = $.proxy(this, 'mousemove')
+      , move = proxy(this, 'mousemove')
       , self = this
 
     $(document)
@@ -389,9 +390,9 @@
 
       $('body').append(div);
 
-      var w1 = $('div', div).innerWidth();
+      var w1 = $('div', div).width();
       div.css('overflow-y', 'scroll');
-      var w2 = $('div', div).innerWidth();
+      var w2 = $('div', div).width();
       $(div).remove();
 
       size = w1 - w2;
@@ -400,4 +401,22 @@
     return size;
   };
 
-})(jQuery);
+  /**
+   * Proxy support for Zepto.
+   */
+  var proxy = $.proxy || function(fn, context) {
+    if (typeof context === 'string') {
+      var tmp = fn[context];
+      context = fn;
+      fn = tmp;
+    }
+
+    var slice = Array.prototype.slice,
+        args  = slice.call(arguments, 2);
+
+    return function() {
+      return fn.apply(context, args.concat(slice.call(arguments)));
+    };
+  };
+
+})(window.jQuery || window.Zepto);
