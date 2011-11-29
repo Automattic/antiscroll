@@ -22,17 +22,16 @@
     this.inner = this.el.querySelector('.antiscroll-inner');
 
     var width = parseInt(this.inner.style.width, 10)
-      , height = parseInt(this.inner.style.height, 10)
-      , dimensions = this.el.getBoundingClientRect();
+      , height = parseInt(this.inner.style.height, 10);
 
     this.inner.style.width = (width + scrollbarSize()) + 'px';
     this.inner.style.height = (height + scrollbarSize()) + 'px';
 
-    if (this.inner.scrollWidth > dimensions.width) {
+    if (this.inner.scrollWidth > getWidth(this.el)) {
       this.horizontal = new Scrollbar.Horizontal(this);
     }
 
-    if (this.inner.scrollHeight > dimensions.height) {
+    if (this.inner.scrollHeight > getHeight(this.el)) {
       this.vertical = new Scrollbar.Vertical(this);
     }
   }
@@ -239,7 +238,7 @@
    */
 
   Scrollbar.Horizontal.prototype.update = function () {
-    var paneWidth = this.pane.el.getBoundingClientRect().width
+    var paneWidth = getWidth(this.pane.el)
       , trackWidth = paneWidth - this.pane.padding * 2
       , innerEl = this.pane.inner;
 
@@ -254,15 +253,15 @@
    */
 
   Scrollbar.Horizontal.prototype.mousemove = function (ev) {
-    var trackWidth = this.pane.el.getBoundingClientRect().width - this.pane.padding * 2
+    var trackWidth = getWidth(this.pane.el) - this.pane.padding * 2
       , pos = ev.pageX - this.startPageX
-      , barWidth = this.el.getBoundingClientRect().width
+      , barWidth = getWidth(this.el)
       , innerEl = this.pane.inner
 
     // minimum top is 0, maximum is the track height
     var y = Math.min(Math.max(pos, 0), trackWidth - barWidth)
 
-    innerEl.scrollLeft = (innerEl.scrollWidth - this.pane.el.getBoundingClientRect().width)
+    innerEl.scrollLeft = (innerEl.scrollWidth - getWidth(this.pane.el))
       * y / (trackWidth - barWidth)
   };
 
@@ -274,7 +273,7 @@
 
   Scrollbar.Horizontal.prototype.mousewheel = function (ev, delta, x, y) {
     if ((x < 0 && 0 == this.pane.inner.scrollLeft) ||
-        (x > 0 && (this.innerEl.scrollLeft + this.pane.el.getBoundingClientRect().width
+        (x > 0 && (this.innerEl.scrollLeft + getWidth(this.pane.el)
           == this.innerEl.scrollWidth))) {
       ev.preventDefault();
       return false;
@@ -306,7 +305,7 @@
    */
 
   Scrollbar.Vertical.prototype.update = function () {
-    var paneHeight = this.pane.el.getBoundingClientRect().height
+    var paneHeight = getHeight(this.pane.el)
       , trackHeight = paneHeight - this.pane.padding * 2
       , innerEl = this.innerEl
 
@@ -321,10 +320,10 @@
    */
 
   Scrollbar.Vertical.prototype.mousemove = function (ev) {
-    var paneHeight = this.pane.el.getBoundingClientRect().height
+    var paneHeight = getHeight(this.pane.el)
       , trackHeight = paneHeight - this.pane.padding * 2
       , pos = ev.pageY - this.startPageY
-      , barHeight = this.el.getBoundingClientRect().height
+      , barHeight = getHeight(this.el)
       , innerEl = this.innerEl
 
     // minimum top is 0, maximum is the track height
@@ -342,7 +341,7 @@
 
   Scrollbar.Vertical.prototype.mousewheel = function (ev, delta, x, y) {
     if ((y > 0 && 0 == this.innerEl.scrollTop) ||
-        (y < 0 && (this.innerEl.scrollTop + this.pane.el.getBoundingClientRect().height
+        (y < 0 && (this.innerEl.scrollTop + getHeight(this.pane.el)
           == this.innerEl.scrollHeight))) {
       ev.preventDefault();
       return false;
@@ -379,11 +378,11 @@
                       + '</div>';
 
       var child = div.firstChild
-         , w1 = child.getBoundingClientRect().width;
+         , w1 = getWidth(child);
 
       div.style.overflowY = 'scorll';
 
-      var w2 = child.getBoundingClientRect().width;
+      var w2 = getWidth(child);
 
       body.removeChild(div);
 
@@ -393,7 +392,15 @@
     return size;
   };
 
-  var proxy = function(fn, context) {
+  function getWidth (el) {
+    return el.getBoundingClientRect().width;
+  }
+
+  function getHeight (el) {
+    return el.getBoundingClientRect().height;
+  }
+
+  function proxy (fn, context) {
     if (typeof context === 'string') {
       var tmp = fn[context];
       context = fn;
