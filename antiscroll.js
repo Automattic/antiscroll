@@ -12,7 +12,7 @@
           $(this).data('antiscroll').destroy();
         }
 
-        $(this).data('antiscroll', new $.Antiscroll(this, options));
+        $(this).data('antiscroll', new Antiscroll(this, options));
       });
     };
   }
