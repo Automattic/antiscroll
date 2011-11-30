@@ -37,8 +37,8 @@
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
     this.inner = this.el.getElementsByClassName('antiscroll-inner')[0];
 
-    var width = parseInt(this.inner.style.width, 10)
-      , height = parseInt(this.inner.style.height, 10);
+    var width = getWidth(this.inner)
+      , height = getHeight(this.inner);
 
     this.inner.style.width = (width + scrollbarSize()) + 'px';
     this.inner.style.height = (height + scrollbarSize()) + 'px';
