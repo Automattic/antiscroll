@@ -397,7 +397,7 @@
       var child = div.firstChild
          , w1 = getWidth(child);
 
-      div.style.overflowY = 'scorll';
+      div.style.overflowY = 'scroll';
 
       var w2 = getWidth(child);
 
