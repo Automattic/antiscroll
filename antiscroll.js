@@ -35,7 +35,7 @@
     this.el = el;
     this.options = opts || {};
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
-    this.inner = this.el.getElementsByClassName('antiscroll-inner')[0];
+    this.inner = getElementsByClassName(this.el, 'antiscroll-inner')[0];
 
     var width = getWidth(this.inner)
       , height = getHeight(this.inner);
@@ -422,6 +422,26 @@
       el.removeEventListener(name, fn, false);
     } else if (el.detachEvent) {
       el.detachEvent('on' + name, fn);
+    }
+  };
+
+  function getElementsByClassName (el, className) {
+    if (el.getElementsByClassName) {
+      return el.getElementsByClassName(className);
+    } else {
+      var matcher = new RegExp("(^|\\s)" + className + "(\\s|$)")
+        , results = []
+        , elements = el.getElementsByTagName('*');
+
+      for (var index = 0, length = elements.length; index < length; index++) {
+        var element = elements[index];
+
+        if (element && matcher.test(element.className)) {
+          results.push(element);
+        }
+      }
+
+      return results;
     }
   };
 
