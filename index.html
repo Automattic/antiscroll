@@ -115,13 +115,6 @@
       }
     </style>
 
-    <script src="antiscroll.js"></script>
-
-    <script>
-      window.addEventListener('load', function() {
-        var scroll = new Antiscroll(document.querySelector('.box-wrap'));
-      }, false);
-    </script>
   </head>
   <body>
     <div id="page">
@@ -137,7 +130,7 @@
         <li>size of container can be dynamically adjusted and scrollbars will adapt.</li>
         <li>supports IE7+, Firefox 3+, Chrome, Safari, Opera</li>
       </ul>
-      <div class="box-wrap antiscroll-wrap">
+      <div id="example" class="box-wrap antiscroll-wrap">
         <div class="box">
           <div class="antiscroll-inner">
             <div class="box-inner">
@@ -246,5 +239,10 @@
       <br style="clear: both">
       <a href="https://github.com/learnboost/antiscroll/downloads" class="button">Download</a>
     </div>
+
+    <script src="antiscroll.js"></script>
+    <script>
+      var scroll = new Antiscroll(document.getElementById('example'));
+    </script>
   </body>
 </html>
