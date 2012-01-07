@@ -39,14 +39,33 @@
       , 'height': '+=' + scrollbarSize()
     });
 
-    if (this.inner.get(0).scrollWidth > this.el.width()) {
+   this.refresh(); 
+  };
+
+  /**
+   * refresh scrollbars
+   *
+   * @api public
+   */
+  Antiscroll.prototype.refresh = function() {
+    var needHScroll = this.inner.get(0).scrollWidth > this.el.width()
+      , needVScroll = this.inner.get(0).scrollHeight > this.el.height();
+
+    if (!this.horizontal && needHScroll) {
       this.horizontal = new Scrollbar.Horizontal(this);
+    } else if (this.horizontal && !needHScroll)  {
+      this.horizontal.destroy();
+      this.horizontal = null
     }
 
-    if (this.inner.get(0).scrollHeight > this.el.height()) {
+    if (!this.vertical && needVScroll) {
       this.vertical = new Scrollbar.Vertical(this);
+    } else if (this.vertical && !needVScroll)  {
+      this.vertical.destroy();
+      this.vertical = null
     }
-  }
+
+  };  
 
   /**
    * Cleans up.
