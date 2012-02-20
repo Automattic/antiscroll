@@ -50,11 +50,11 @@
       , 'height': '+=' + scrollbarSize()
     });
 
-    if (this.inner.get(0).scrollWidth > this.el.width()) {
+    if (this.inner.get(0).scrollWidth > this.el.width() && this.options.x) {
       this.horizontal = new Scrollbar.Horizontal(this);
     }
 
-    if (this.inner.get(0).scrollHeight > this.el.height()) {
+    if (this.inner.get(0).scrollHeight > this.el.height() && this.options.y) {
       this.vertical = new Scrollbar.Vertical(this);
     }
   }
