@@ -31,33 +31,45 @@
 
   function Antiscroll (el, opts) {
     this.el = $(el);
+    this.options = opts || {};
 
-    // options
-    opts = opts || {};
-    this.options = {
-            x: true
-          , y: true
-          , padding: 2
-        };
+    this.x = false !== this.options.x;
+    this.y = false !== this.options.y;
+    this.padding = undefined == this.options.padding ? 2 : this.options.padding;
 
-    for (var k in this.options)
-      this.options[k] = typeof opts[k] != 'undefined' ? opts[k] : this.options[k];
-
-    this.padding = this.options.padding;
     this.inner = this.el.find('.antiscroll-inner');
     this.inner.css({
         'width': '+=' + scrollbarSize()
       , 'height': '+=' + scrollbarSize()
     });
 
-    if (this.inner.get(0).scrollWidth > this.el.width() && this.options.x) {
+   this.refresh(); 
+  };
+
+  /**
+   * refresh scrollbars
+   *
+   * @api public
+   */
+  Antiscroll.prototype.refresh = function() {
+    var needHScroll = this.inner.get(0).scrollWidth > this.el.width()
+      , needVScroll = this.inner.get(0).scrollHeight > this.el.height();
+
+    if (!this.horizontal && needHScroll && this.x) {
       this.horizontal = new Scrollbar.Horizontal(this);
+    } else if (this.horizontal && !needHScroll)  {
+      this.horizontal.destroy();
+      this.horizontal = null
     }
 
-    if (this.inner.get(0).scrollHeight > this.el.height() && this.options.y) {
+    if (!this.vertical && needVScroll && this.y) {
       this.vertical = new Scrollbar.Vertical(this);
+    } else if (this.vertical && !needVScroll)  {
+      this.vertical.destroy();
+      this.vertical = null
     }
-  }
+
+  };  
 
   /**
    * Cleans up.
@@ -77,7 +89,21 @@
   };
 
   /**
-   * Scrolbar constructor.
+   * Rebuild Antiscroll.
+   *
+   * @return {Antiscroll} for chaining
+   * @api public
+   */
+
+  Antiscroll.prototype.rebuild = function () {
+    this.destroy();
+    this.inner.attr('style', '');
+    Antiscroll.call(this, this.el, this.options);
+    return this;
+  };
+
+  /**
+   * Scrollbar constructor.
    *
    * @param {Element|jQuery} element
    * @api public
@@ -106,9 +132,12 @@
     this.pane.inner.bind('mousewheel', $.proxy(this, 'mousewheel'));
 
     // show
-    var self = this;
-    this.show();
-    this.hiding = setTimeout($.proxy(this, 'hide'), 3000);
+    var initialDisplay = this.pane.options.initialDisplay;
+
+    if (initialDisplay !== false) {
+      this.show();
+      this.hiding = setTimeout($.proxy(this, 'hide'), parseInt(initialDisplay, 10) || 3000);
+    }
   };
 
   /**
@@ -280,7 +309,7 @@
     // minimum top is 0, maximum is the track height
     var y = Math.min(Math.max(pos, 0), trackWidth - barWidth)
 
-    innerEl.scrollLeft = (innerEl.scrollWidth - this.pane.el.width()) 
+    innerEl.scrollLeft = (innerEl.scrollWidth - this.pane.el.width())
       * y / (trackWidth - barWidth)
   };
 
@@ -291,8 +320,8 @@
    */
 
   Scrollbar.Horizontal.prototype.mousewheel = function (ev, delta, x, y) {
-    if ((x < 0 && 0 == this.pane.inner.get(0).scrollLeft) || 
-        (x > 0 && (this.innerEl.scrollLeft + this.pane.el.width() 
+    if ((x < 0 && 0 == this.pane.inner.get(0).scrollLeft) ||
+        (x > 0 && (this.innerEl.scrollLeft + this.pane.el.width()
           == this.innerEl.scrollWidth))) {
       ev.preventDefault();
       return false;
@@ -348,7 +377,7 @@
     // minimum top is 0, maximum is the track height
     var y = Math.min(Math.max(pos, 0), trackHeight - barHeight)
 
-    innerEl.scrollTop = (innerEl.scrollHeight - paneHeight) 
+    innerEl.scrollTop = (innerEl.scrollHeight - paneHeight)
       * y / (trackHeight - barHeight)
   };
 
@@ -359,8 +388,8 @@
    */
 
   Scrollbar.Vertical.prototype.mousewheel = function (ev, delta, x, y) {
-    if ((y > 0 && 0 == this.innerEl.scrollTop) || 
-        (y < 0 && (this.innerEl.scrollTop + this.pane.el.height() 
+    if ((y > 0 && 0 == this.innerEl.scrollTop) ||
+        (y < 0 && (this.innerEl.scrollTop + this.pane.el.height()
           == this.innerEl.scrollHeight))) {
       ev.preventDefault();
       return false;
