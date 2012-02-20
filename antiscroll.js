@@ -32,7 +32,11 @@
   function Antiscroll (el, opts) {
     this.el = $(el);
     this.options = opts || {};
+
+    this.x = false !== this.options.x;
+    this.y = false !== this.options.y;
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
+
     this.inner = this.el.find('.antiscroll-inner');
     this.inner.css({
         'width': '+=' + scrollbarSize()
@@ -51,14 +55,14 @@
     var needHScroll = this.inner.get(0).scrollWidth > this.el.width()
       , needVScroll = this.inner.get(0).scrollHeight > this.el.height();
 
-    if (!this.horizontal && needHScroll) {
+    if (!this.horizontal && needHScroll && this.x) {
       this.horizontal = new Scrollbar.Horizontal(this);
     } else if (this.horizontal && !needHScroll)  {
       this.horizontal.destroy();
       this.horizontal = null
     }
 
-    if (!this.vertical && needVScroll) {
+    if (!this.vertical && needVScroll && this.y) {
       this.vertical = new Scrollbar.Vertical(this);
     } else if (this.vertical && !needVScroll)  {
       this.vertical.destroy();
