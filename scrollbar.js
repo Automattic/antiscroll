@@ -1,6 +1,6 @@
-/*global define: false, require: false, $: false */
+/*global define: false, require: false, jQuery: false */
 
-(function () {
+(function ($) {
     "use strict";
 
     $.fn.scrollbar = function (opts) {
@@ -48,5 +48,5 @@
         });
     };
 
-}());
+}(jQuery));
 
