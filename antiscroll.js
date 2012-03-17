@@ -43,7 +43,7 @@
       , 'height': '+=' + scrollbarSize()
     });
 
-   this.refresh(); 
+    this.refresh();
   };
 
   /**
@@ -69,7 +69,7 @@
       this.vertical = null
     }
 
-  };  
+  };
 
   /**
    * Cleans up.
@@ -417,7 +417,7 @@
   var size;
 
   function scrollbarSize () {
-    if (!size) {
+    if (size === undefined) {
       var div = $(
           '<div style="width:50px;height:50px;overflow:hidden;'
         + 'position:absolute;top:-200px;left:-200px;"><div style="height:100px;">'
