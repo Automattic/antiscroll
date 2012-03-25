@@ -34,10 +34,11 @@
     this.options = opts || {};
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
     this.inner = this.el.find('.antiscroll-inner');
-    this.inner.css({
-        'width': '+=' + scrollbarSize()
-      , 'height': '+=' + scrollbarSize()
-    });
+
+    cssMap = {}
+    if (this.x) cssMap.width = '+=' + scrollbarSize();
+    if (this.y) cssMap.height = '+=' + scrollbarSize();
+    this.inner.css(cssMap);
 
    this.refresh(); 
   };
@@ -51,21 +52,28 @@
     var needHScroll = this.inner.get(0).scrollWidth > this.el.width()
       , needVScroll = this.inner.get(0).scrollHeight > this.el.height();
 
-    if (!this.horizontal && needHScroll) {
-      this.horizontal = new Scrollbar.Horizontal(this);
-    } else if (this.horizontal && !needHScroll)  {
-      this.horizontal.destroy();
-      this.horizontal = null
+    if (this.x) {
+      if (!this.horizontal && needHScroll) {
+        this.horizontal = new Scrollbar.Horizontal(this);
+      } else if (this.horizontal && !needHScroll)  {
+        this.horizontal.destroy();
+        this.horizontal = null;
+      } else if (this.horizontal) {
+        this.horizontal.update();
+      }
     }
 
-    if (!this.vertical && needVScroll) {
-      this.vertical = new Scrollbar.Vertical(this);
-    } else if (this.vertical && !needVScroll)  {
-      this.vertical.destroy();
-      this.vertical = null
+    if (this.y) {
+      if (!this.vertical && needVScroll) {
+        this.vertical = new Scrollbar.Vertical(this);
+      } else if (this.vertical && !needVScroll)  {
+        this.vertical.destroy();
+        this.vertical = null
+      } else if (this.vertical) {
+        this.vertical.update();
+      }
     }
-
-  };  
+  };
 
   /**
    * Cleans up.
