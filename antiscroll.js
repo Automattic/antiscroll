@@ -35,7 +35,7 @@
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
     this.inner = this.el.find('.antiscroll-inner');
 
-    cssMap = {}
+    var cssMap = {};
     if (this.x) cssMap.width = '+=' + scrollbarSize();
     if (this.y) cssMap.height = '+=' + scrollbarSize();
     this.inner.css(cssMap);
