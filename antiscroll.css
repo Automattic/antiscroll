@@ -5,8 +5,8 @@
 }
 
 .antiscroll-scrollbar {
-  background: #747474;
-  background: rgba(0, 0, 0, 0.54);
+  background: gray;
+  background: rgba(0, 0, 0, 0.5);
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
   border-radius: 7px;
