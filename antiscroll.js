@@ -44,7 +44,7 @@
     });
 
     this.refresh();
-  };
+  }
 
   /**
    * refresh scrollbars
@@ -81,9 +81,11 @@
   Antiscroll.prototype.destroy = function () {
     if (this.horizontal) {
       this.horizontal.destroy();
+      this.horizontal = null
     }
     if (this.vertical) {
       this.vertical.destroy();
+      this.vertical = null
     }
     return this;
   };
@@ -126,10 +128,12 @@
     this.el.mousedown($.proxy(this, 'mousedown'));
 
     // scrolling
-    this.pane.inner.scroll($.proxy(this, 'scroll'));
+    this.innerPaneScrollListener = $.proxy(this, 'scroll');
+    this.pane.inner.scroll(this.innerPaneScrollListener);
 
     // wheel -optional-
-    this.pane.inner.bind('mousewheel', $.proxy(this, 'mousewheel'));
+    this.innerPaneMouseWheelListener = $.proxy(this, 'mousewheel');
+    this.pane.inner.bind('mousewheel', this.innerPaneMouseWheelListener);
 
     // show
     var initialDisplay = this.pane.options.initialDisplay;
@@ -138,7 +142,7 @@
       this.show();
       this.hiding = setTimeout($.proxy(this, 'hide'), parseInt(initialDisplay, 10) || 3000);
     }
-  };
+  }
 
   /**
    * Cleans up.
@@ -149,6 +153,8 @@
 
   Scrollbar.prototype.destroy = function () {
     this.el.remove();
+    this.pane.inner.unbind('scroll', this.innerPaneScrollListener);
+    this.pane.inner.unbind('mousewheel', this.innerPaneMouseWheelListener);
     return this;
   };
 
@@ -175,7 +181,7 @@
     if (!this.dragging) {
       this.hide();
     }
-  }
+  };
 
   /**
    * Called upon wrap scroll.
@@ -270,7 +276,7 @@
   Scrollbar.Horizontal = function (pane) {
     this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-horizontal">');
     Scrollbar.call(this, pane);
-  }
+  };
 
   /**
    * Inherits from Scrollbar.
@@ -292,7 +298,7 @@
     this.el
       .css('width', trackWidth * paneWidth / innerEl.scrollWidth)
       .css('left', trackWidth * innerEl.scrollLeft / innerEl.scrollWidth)
-  }
+  };
 
   /**
    * Called upon drag.
@@ -408,7 +414,7 @@
     function f() {};
     f.prototype = ctorB.prototype;
     ctorA.prototype = new f;
-  };
+  }
 
   /**
    * Scrollbar size detection.
@@ -435,6 +441,6 @@
     }
 
     return size;
-  };
+  }
 
 })(jQuery);
