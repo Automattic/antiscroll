@@ -360,11 +360,21 @@
   Scrollbar.Vertical.prototype.update = function () {
     var paneHeight = this.pane.el.height()
       , trackHeight = paneHeight - this.pane.padding * 2
-      , innerEl = this.innerEl
+      , innerEl = this.innerEl;
+      
+    var scrollbarHeight = trackHeight * paneHeight / innerEl.scrollHeight;
+    scrollbarHeight = scrollbarHeight < 20 ? 20 : scrollbarHeight;
+    
+    var topPos = trackHeight * innerEl.scrollTop / innerEl.scrollHeight;
+    
+    if((topPos + scrollbarHeight) > trackHeight) {
+        var diff = (topPos + scrollbarHeight) - trackHeight;
+        topPos = topPos - diff - 3;
+    }
 
     this.el
-      .css('height', trackHeight * paneHeight / innerEl.scrollHeight)
-      .css('top', trackHeight * innerEl.scrollTop / innerEl.scrollHeight)
+      .css('height', scrollbarHeight)
+      .css('top', topPos)
   };
 
   /**
