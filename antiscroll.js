@@ -51,6 +51,7 @@
    *
    * @api public
    */
+
   Antiscroll.prototype.refresh = function() {
     var needHScroll = this.inner.get(0).scrollWidth > this.el.width()
       , needVScroll = this.inner.get(0).scrollHeight > this.el.height();
@@ -68,7 +69,6 @@
       this.vertical.destroy();
       this.vertical = null
     }
-
   };
 
   /**
@@ -254,7 +254,8 @@
    */
 
   Scrollbar.prototype.hide = function () {
-    if (this.shown) {
+    var autoHide = this.pane.options.autoHide;
+    if (autoHide !== false && this.shown) {
       // check for dragging
       this.el.removeClass('antiscroll-scrollbar-shown');
       this.shown = false;
