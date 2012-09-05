@@ -39,11 +39,11 @@
       , 'height': '+=' + scrollbarSize()
     });
 
-    if (this.inner.get(0).scrollWidth > this.el.width()) {
+    if (this.options.forceHorizontal || this.inner.get(0).scrollWidth > this.el.width()) {
       this.horizontal = new Scrollbar.Horizontal(this);
     }
 
-    if (this.inner.get(0).scrollHeight > this.el.height()) {
+    if (this.options.forceVertical || this.inner.get(0).scrollHeight > this.el.height()) {
       this.vertical = new Scrollbar.Vertical(this);
     }
   }
@@ -99,7 +99,9 @@
 
     if (initialDisplay !== false) {
       this.show();
-      this.hiding = setTimeout($.proxy(this, 'hide'), parseInt(initialDisplay, 10) || 3000);
+      if (this.pane.options.autoHide) {
+          this.hiding = setTimeout($.proxy(this, 'hide'), parseInt(initialDisplay, 10) || 3000);
+      }
     }
   };
 
@@ -136,7 +138,9 @@
     this.enter = false;
 
     if (!this.dragging) {
-      this.hide();
+        if (this.pane.options.autoHide) {
+            this.hide();
+        }
     }
   }
 
@@ -150,7 +154,9 @@
     if (!this.shown) {
       this.show();
       if (!this.enter && !this.dragging) {
-        this.hiding = setTimeout($.proxy(this, 'hide'), 1500);
+        if (this.pane.options.autoHide) {
+            this.hiding = setTimeout($.proxy(this, 'hide'), 1500);
+        }
       }
     }
 
@@ -172,19 +178,19 @@
     this.startPageX = ev.pageX - parseInt(this.el.css('left'), 10);
 
     // prevent crazy selections on IE
-    document.onselectstart = function () { return false; };
+    this.el[0].ownerDocument.onselectstart = function () { return false; };
 
     var pane = this.pane
       , move = $.proxy(this, 'mousemove')
       , self = this
 
-    $(document)
+    $(this.el[0].ownerDocument)
       .mousemove(move)
       .mouseup(function () {
         self.dragging = false;
-        document.onselectstart = null;
+        this.onselectstart = null;
 
-        $(document).unbind('mousemove', move);
+        $(this).unbind('mousemove', move);
 
         if (!self.enter) {
           self.hide();
@@ -199,8 +205,7 @@
    */
 
   Scrollbar.prototype.show = function (duration) {
-    if (!this.shown) {
-      this.update();
+    if (!this.shown && this.update()) {
       this.el.addClass('antiscroll-scrollbar-shown');
       if (this.hiding) {
         clearTimeout(this.hiding);
@@ -231,7 +236,7 @@
    */
 
   Scrollbar.Horizontal = function (pane) {
-    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-horizontal">');
+    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-horizontal">', pane.el);
     Scrollbar.call(this, pane);
   }
 
@@ -254,7 +259,9 @@
 
     this.el
       .css('width', trackWidth * paneWidth / innerEl.scrollWidth)
-      .css('left', trackWidth * innerEl.scrollLeft / innerEl.scrollWidth)
+      .css('left', trackWidth * innerEl.scrollLeft / innerEl.scrollWidth);
+
+    return paneWidth < innerEl.scrollWidth;
   }
 
   /**
@@ -298,7 +305,7 @@
    */
 
   Scrollbar.Vertical = function (pane) {
-    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-vertical">');
+    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-vertical">', pane.el);
     Scrollbar.call(this, pane);
   };
 
@@ -321,7 +328,9 @@
 
     this.el
       .css('height', trackHeight * paneHeight / innerEl.scrollHeight)
-      .css('top', trackHeight * innerEl.scrollTop / innerEl.scrollHeight)
+      .css('top', trackHeight * innerEl.scrollTop / innerEl.scrollHeight);
+
+    return paneHeight < innerEl.scrollHeight;
   };
 
   /**
