@@ -335,7 +335,7 @@
 
   Scrollbar.Horizontal.prototype.mousewheel = function (ev, delta, x, y) {
     if ((x < 0 && 0 == this.pane.inner.get(0).scrollLeft) ||
-        (x > 0 && (this.innerEl.scrollLeft + Math.ceil(this.pane.el.width())
+        (x > 0 && (this.innerEl.scrollLeft + this.pane.el.width()
           == this.innerEl.scrollWidth))) {
       ev.preventDefault();
       return false;
@@ -415,7 +415,7 @@
 
   Scrollbar.Vertical.prototype.mousewheel = function (ev, delta, x, y) {
     if ((y > 0 && 0 == this.innerEl.scrollTop) ||
-        (y < 0 && (this.innerEl.scrollTop + Math.ceil(this.pane.el.height())
+        (y < 0 && (this.innerEl.scrollTop + this.pane.el.height()
           == this.innerEl.scrollHeight))) {
       ev.preventDefault();
       return false;
