@@ -35,6 +35,7 @@
 
     this.x = (false !== this.options.x) || this.options.forceHorizontal;
     this.y = (false !== this.options.y) || this.options.forceVertical;
+    this.autoHide = false !== this.options.autoHide;
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
 
     this.inner = this.el.find('.antiscroll-inner');
@@ -140,7 +141,7 @@
 
     if (initialDisplay !== false) {
       this.show();
-      if (this.pane.options.autoHide) {
+      if (this.pane.autoHide) {
           this.hiding = setTimeout($.proxy(this, 'hide'), parseInt(initialDisplay, 10) || 3000);
       }
     }
@@ -181,7 +182,7 @@
     this.enter = false;
 
     if (!this.dragging) {
-        if (this.pane.options.autoHide) {
+        if (this.pane.autoHide) {
             this.hide();
         }
     }
@@ -197,7 +198,7 @@
     if (!this.shown) {
       this.show();
       if (!this.enter && !this.dragging) {
-        if (this.pane.options.autoHide) {
+        if (this.pane.autoHide) {
             this.hiding = setTimeout($.proxy(this, 'hide'), 1500);
         }
       }
@@ -265,8 +266,7 @@
    */
 
   Scrollbar.prototype.hide = function () {
-    var autoHide = this.pane.options.autoHide;
-    if (autoHide !== false && this.shown) {
+    if (this.pane.autoHide !== false && this.shown) {
       // check for dragging
       this.el.removeClass('antiscroll-scrollbar-shown');
       this.shown = false;
