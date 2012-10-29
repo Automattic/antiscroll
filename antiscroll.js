@@ -44,7 +44,7 @@
     });
 
     this.refresh();
-  };
+  }
 
   /**
    * refresh scrollbars
@@ -81,9 +81,11 @@
   Antiscroll.prototype.destroy = function () {
     if (this.horizontal) {
       this.horizontal.destroy();
+      this.horizontal = null
     }
     if (this.vertical) {
       this.vertical.destroy();
+      this.vertical = null
     }
     return this;
   };
@@ -126,10 +128,12 @@
     this.el.mousedown($.proxy(this, 'mousedown'));
 
     // scrolling
-    this.pane.inner.scroll($.proxy(this, 'scroll'));
+    this.innerPaneScrollListener = $.proxy(this, 'scroll');
+    this.pane.inner.scroll(this.innerPaneScrollListener);
 
     // wheel -optional-
-    this.pane.inner.bind('mousewheel', $.proxy(this, 'mousewheel'));
+    this.innerPaneMouseWheelListener = $.proxy(this, 'mousewheel');
+    this.pane.inner.bind('mousewheel', this.innerPaneMouseWheelListener);
 
     // show
     var initialDisplay = this.pane.options.initialDisplay;
@@ -138,7 +142,7 @@
       this.show();
       this.hiding = setTimeout($.proxy(this, 'hide'), parseInt(initialDisplay, 10) || 3000);
     }
-  };
+  }
 
   /**
    * Cleans up.
@@ -149,6 +153,8 @@
 
   Scrollbar.prototype.destroy = function () {
     this.el.remove();
+    this.pane.inner.unbind('scroll', this.innerPaneScrollListener);
+    this.pane.inner.unbind('mousewheel', this.innerPaneMouseWheelListener);
     return this;
   };
 
@@ -175,7 +181,7 @@
     if (!this.dragging) {
       this.hide();
     }
-  }
+  };
 
   /**
    * Called upon wrap scroll.
@@ -271,7 +277,7 @@
   Scrollbar.Horizontal = function (pane) {
     this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-horizontal">');
     Scrollbar.call(this, pane);
-  }
+  };
 
   /**
    * Inherits from Scrollbar.
@@ -293,7 +299,7 @@
     this.el
       .css('width', trackWidth * paneWidth / innerEl.scrollWidth)
       .css('left', trackWidth * innerEl.scrollLeft / innerEl.scrollWidth)
-  }
+  };
 
   /**
    * Called upon drag.
@@ -355,11 +361,21 @@
   Scrollbar.Vertical.prototype.update = function () {
     var paneHeight = this.pane.el.height()
       , trackHeight = paneHeight - this.pane.padding * 2
-      , innerEl = this.innerEl
+      , innerEl = this.innerEl;
+      
+    var scrollbarHeight = trackHeight * paneHeight / innerEl.scrollHeight;
+    scrollbarHeight = scrollbarHeight < 20 ? 20 : scrollbarHeight;
+    
+    var topPos = trackHeight * innerEl.scrollTop / innerEl.scrollHeight;
+    
+    if((topPos + scrollbarHeight) > trackHeight) {
+        var diff = (topPos + scrollbarHeight) - trackHeight;
+        topPos = topPos - diff - 3;
+    }
 
     this.el
-      .css('height', trackHeight * paneHeight / innerEl.scrollHeight)
-      .css('top', trackHeight * innerEl.scrollTop / innerEl.scrollHeight)
+      .css('height', scrollbarHeight)
+      .css('top', topPos)
   };
 
   /**
@@ -409,7 +425,7 @@
     function f() {};
     f.prototype = ctorB.prototype;
     ctorA.prototype = new f;
-  };
+  }
 
   /**
    * Scrollbar size detection.
@@ -436,6 +452,6 @@
     }
 
     return size;
-  };
+  }
 
 })(jQuery);
