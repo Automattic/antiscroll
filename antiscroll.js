@@ -39,8 +39,8 @@
 
     this.inner = this.el.find('.antiscroll-inner');
     this.inner.css({
-        'width': '+=' + scrollbarSize()
-      , 'height': '+=' + scrollbarSize()
+        'width':  '+=' + (this.y ? scrollbarSize() : 0)
+      , 'height': '+=' + (this.x ? scrollbarSize() : 0)
     });
 
     this.refresh();
