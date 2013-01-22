@@ -38,9 +38,9 @@
 
     var innerClass = 'antiscroll-inner';
     if(this.options.innerClass) {
-      	innerClass = this.options.innerClass;
-  	}
-  	this.inner = this.el.find('.' + innerClass);
+      innerClass = this.options.innerClass;
+    }
+    this.inner = this.el.find('.' + innerClass);
     this.inner.css({
         'width': '+=' + scrollbarSize()
       , 'height': '+=' + scrollbarSize()
