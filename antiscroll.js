@@ -1,4 +1,3 @@
-
 (function ($) {
 
   /**
@@ -37,7 +36,11 @@
     this.y = false !== this.options.y;
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
 
-    this.inner = this.el.find('.antiscroll-inner');
+    var innerClass = 'antiscroll-inner';
+    if(this.options.innerClass) {
+      	innerClass = this.options.innerClass;
+  	}
+  	this.inner = this.el.find('.' + innerClass);
     this.inner.css({
         'width': '+=' + scrollbarSize()
       , 'height': '+=' + scrollbarSize()
