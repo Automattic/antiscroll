@@ -109,6 +109,13 @@ arbitrarily large width, therefore allowing scrolling of a single axis
 Scrollbar size detection based on the work of [Jonathan
 Sharp](http://jdsharp.us/jQuery/minute/calculate-scrollbar-width.php).
 
+### Contributors
+
+- Alexandre Rocha Lima e marcondes [@arlm](https://github.com/arlm)
+- Othree [@othree](https://github.com/othree)
+- PG Herveou [@pgherveou](https://github.com/pgherveou)
+- Fontaine Shu [@fontaineshu](https://github.com/fontaineshu) 
+
 ## Dependencies
 
 - [jQuery](http://github.com/jquery/query)
