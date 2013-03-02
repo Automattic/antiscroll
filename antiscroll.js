@@ -43,11 +43,6 @@
       , 'height': '+=' + (this.x ? scrollbarSize() : 0)
     });
 
-    var cssMap = {};
-    if (this.x) cssMap.width = '+=' + scrollbarSize();
-    if (this.y) cssMap.height = '+=' + scrollbarSize();
-    this.inner.css(cssMap);
-
     this.refresh();
   };
 
