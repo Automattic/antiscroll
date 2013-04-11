@@ -113,6 +113,16 @@
         margin: 0 5px;
         padding: 3px 0;
       }
+
+      .action {
+        color: #0069d6;
+        cursor: pointer;
+      }
+
+      .action:hover {
+        color: #00438a;
+      }
+
     </style>
 
     <script src="deps/jquery.js"></script>
@@ -120,9 +130,42 @@
     <script src="https://raw.github.com/LearnBoost/antiscroll/master/antiscroll.js"></script>
 
     <script>
+
       $(function () {
-        $('.box-wrap').antiscroll();
+        scroller = $('.box-wrap').antiscroll().data('antiscroll');
+
+        $("#addRow").click(function() {                    
+          $('.box-wrap tr:last').clone().appendTo('.box-wrap table');
+          $("#rows b").text($(".box-wrap tr").length);
+          scroller.refresh();
+        });
+
+        $("#removeRow").click(function() {
+          $('.box-wrap tr:last').remove();
+          $("#rows b").text($(".box-wrap tr").length);
+          scroller.refresh();
+        });
+
+        $("#addCol").click(function() {           
+          $('.box-wrap tr').each(function(index, tr) {            
+            $('td:last', tr).clone().appendTo(tr);
+          });
+          $("#cols b").text($(".box-wrap tr:last td").length);
+          scroller.refresh();
+        });
+
+        $("#removeCol").click(function() {          
+          $('.box-wrap tr').find('td:last').remove();
+          $("#cols b").text($(".box-wrap tr:last td").length);
+          scroller.refresh();
+        });
+
+        $("#rows b").text($(".box-wrap tr").length);
+        $("#cols b").text($(".box-wrap tr:last td").length);        
       });
+
+
+
     </script>
   </head>
   <body>
@@ -144,12 +187,6 @@
           <div class="antiscroll-inner">
             <div class="box-inner">
               <table>
-                <tr>
-                  <th>Head</th><th>Head</th><th>Head</th><th>Head</th><th>Head</th>
-                  <th>Head</th><th>Head</th><th>Head</th><th>Head</th><th>Head</th>
-                  <th>Head</th><th>Head</th><th>Head</th><th>Head</th><th>Head</th>
-                  <th>Head</th><th>Head</th><th>Head</th><th>Head</th><th>Head</th>
-                </tr>
                 <tr>
                   <td>Body</td><td>Body</td><td>Body</td><td>Body</td><td>Body</td>
                   <td>Body</td><td>Body</td><td>Body</td><td>Body</td><td>Body</td>
@@ -247,6 +284,21 @@
       </div>
       <br style="clear: both">
       <a href="https://github.com/learnboost/antiscroll/downloads" class="button">Download</a>
+
+      <br /> 
+      
+      <p id="rows"><b>X</b> rows</p>  
+      <ul>
+        <li><a class="action" id="addRow" >Add row</a></li>
+        <li><a class="action" id="removeRow">Remove row</a></li>
+      </ul>
+
+      <p id="cols"><b>X</b> cols</p>
+      </ul>
+        <li><a class="action" id="addCol" >Add col</a></li>
+        <li><a class="action" id="removeCol">Remove col</a></li>
+      </ul>
+    
     </div>
   </body>
 </html>

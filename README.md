@@ -1,4 +1,3 @@
-
 # Antiscroll: cross-browser native OSX Lion scrollbars
 
 Antiscroll fixes a fundamental problem JavaScript UI developers commonly face:
@@ -25,6 +24,30 @@ the scrollbars popularized by OS X Lion that retains native properties.
 
 Please click [here](http://learnboost.github.com/antiscroll/) to see it in
 action.
+
+## Installation
+
+1. Wrap scrollable content with the class ```antiscroll-inner```
+1. Wrap the above with the class ```antiscroll-wrap```
+1. Include the following Javascript
+
+```javascript
+   $(function () {
+     $('.antiscroll-wrap').antiscroll();
+   });
+```
+
+### Configuration
+
+You may remove automatic scrollbar hiding by passing in a key-value to the ```antiscroll()``` function like so:
+
+```javascript
+   $(function () {
+     $('.antiscroll-wrap').antiscroll({
+       autoHide: false
+     });
+   });
+```
 
 ## What does it look like?
 
@@ -85,6 +108,13 @@ arbitrarily large width, therefore allowing scrolling of a single axis
 
 Scrollbar size detection based on the work of [Jonathan
 Sharp](http://jdsharp.us/jQuery/minute/calculate-scrollbar-width.php).
+
+### Contributors
+
+- Alexandre Rocha Lima e marcondes [@arlm](https://github.com/arlm)
+- Othree [@othree](https://github.com/othree)
+- PG Herveou [@pgherveou](https://github.com/pgherveou)
+- Fontaine Shu [@fontaineshu](https://github.com/fontaineshu) 
 
 ## Dependencies
 
