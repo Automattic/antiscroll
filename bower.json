@@ -1,0 +1,14 @@
+{
+  "name": "antiscroll",
+  "version": "0.0.0",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/LearnBoost/antiscroll.git"
+	},
+  "main": "antiscroll.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ]
+}
