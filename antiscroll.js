@@ -287,7 +287,7 @@
    */
 
   Scrollbar.Horizontal = function (pane) {
-    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-horizontal">', pane.el);
+    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-horizontal">').appendTo(pane.el);
     Scrollbar.call(this, pane);
   };
 
@@ -355,8 +355,8 @@
    * @api private
    */
 
-  Scrollbar.Vertical = function (pane) {
-    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-vertical">', pane.el);
+  Scrollbar.Vertical = function (pane) {  	
+    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-vertical">').appendTo(pane.el);
     Scrollbar.call(this, pane);
   };
 
