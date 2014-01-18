@@ -287,7 +287,7 @@
    */
 
   Scrollbar.Horizontal = function (pane) {
-    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-horizontal">', pane.el);
+    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-horizontal"/>', pane.el);
     Scrollbar.call(this, pane);
   };
 
@@ -356,7 +356,7 @@
    */
 
   Scrollbar.Vertical = function (pane) {
-    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-vertical">', pane.el);
+    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-vertical"/>', pane.el);
     Scrollbar.call(this, pane);
   };
 
@@ -453,7 +453,7 @@
     if (size === undefined) {
       var div = $(
           '<div class="antiscroll-inner" style="width:50px;height:50px;overflow-y:scroll;'
-        + 'position:absolute;top:-200px;left:-200px;"><div style="height:100px;width:100%">'
+        + 'position:absolute;top:-200px;left:-200px;"><div style="height:100px;width:100%"/>'
         + '</div>'
       );
 
