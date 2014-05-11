@@ -37,10 +37,13 @@
     this.autoHide = false !== this.options.autoHide;
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
 
+    var width  = this.inner.parent().width();
+    var height = this.inner.parent().height();
+    
     this.inner = this.el.find('.antiscroll-inner');
     this.inner.css({
-        'width':  '+=' + (this.y ? scrollbarSize() : 0)
-      , 'height': '+=' + (this.x ? scrollbarSize() : 0)
+        'width':  (this.y ? width  + scrollbarSize() : 0)
+      , 'height': (this.x ? height + scrollbarSize() : 0)
     });
 
     this.refresh();
