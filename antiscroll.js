@@ -38,10 +38,13 @@
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
 
     this.inner = this.el.find('.antiscroll-inner');
-    this.inner.css({
-        'width':  '+=' + (this.y ? scrollbarSize() : 0)
-      , 'height': '+=' + (this.x ? scrollbarSize() : 0)
-    });
+    var css = {
+        height: '+=' + (this.x ? scrollbarSize() : 0)
+    };
+    if (!this.options.noHScroll) {
+    	css.width = '+=' + (this.y ? scrollbarSize() : 0);
+    }
+    this.inner.css(css);
 
     this.refresh();
   };
@@ -53,7 +56,7 @@
    */
 
   Antiscroll.prototype.refresh = function() {
-    var needHScroll = this.inner.get(0).scrollWidth > this.el.width() + (this.y ? scrollbarSize() : 0), 
+    var needHScroll = this.options.noHScroll ? false : (this.inner.get(0).scrollWidth > this.el.width() + (this.y ? scrollbarSize() : 0)),
 	    needVScroll = this.inner.get(0).scrollHeight > this.el.height() + (this.x ? scrollbarSize() : 0);
 
     if (this.x) {
