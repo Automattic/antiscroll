@@ -19,6 +19,7 @@
   -webkit-transition: linear 300ms opacity;
   -moz-transition: linear 300ms opacity;
   -o-transition: linear 300ms opacity;
+  z-index: 1000;
 }
 
 .antiscroll-scrollbar-shown {
@@ -36,8 +37,13 @@
 .antiscroll-scrollbar-vertical {
   width: 7px;
   margin-top: 2px;
-  right: 2px;
   top: 0;
+}
+html[dir='ltr'] .antiscroll-scrollbar-vertical {
+  right: 2px;
+}
+html[dir='rtl'] .antiscroll-scrollbar-vertical {
+  left: 2px;
 }
 
 .antiscroll-inner {
