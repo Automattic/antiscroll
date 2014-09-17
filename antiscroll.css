@@ -19,7 +19,7 @@
   -webkit-transition: linear 300ms opacity;
   -moz-transition: linear 300ms opacity;
   -o-transition: linear 300ms opacity;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .antiscroll-scrollbar-shown {
