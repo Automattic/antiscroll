@@ -49,6 +49,16 @@ You may remove automatic scrollbar hiding by passing in a key-value to the ```an
    });
 ```
 
+You may also remove automatic scrollbar showing by passing in a key-value to the ```antiscroll()``` function like so:
+
+```javascript
+   $(function () {
+     $('.antiscroll-wrap').antiscroll({
+       autoShow: false
+     });
+   });
+```
+
 ## What does it look like?
 
 **Firefox 8 `overflow: scroll` and antiscroll on OS X**
