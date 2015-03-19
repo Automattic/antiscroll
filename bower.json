@@ -1,5 +1,5 @@
 {
-  "name": "LearnBoost/antiscroll",
+  "name": "antiscroll",
   "version": "1.0.0",
   "main": ["antiscroll.css", "antiscroll.js"],
   "description": "Cross-browser native OSX Lion scrollbars",
