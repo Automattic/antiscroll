@@ -22,7 +22,7 @@ the scrollbars popularized by OS X Lion that retains native properties.
 
 ## Demo
 
-Please click [here](http://learnboost.github.com/antiscroll/) to see it in
+Please click [here](http://automattic.github.com/antiscroll/) to see it in
 action.
 
 ## Installation
