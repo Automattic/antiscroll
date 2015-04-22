@@ -163,6 +163,9 @@
 
   Scrollbar.prototype.destroy = function () {
     this.el.remove();
+    this.el.unbind('mousedown', this.mousedown);
+    this.pane.el.unbind('mouseenter', this.mouseenter);
+    this.pane.el.unbind('mouseleave', this.mouseleave);
     this.pane.inner.unbind('scroll', this.innerPaneScrollListener);
     this.pane.inner.unbind('mousewheel', this.innerPaneMouseWheelListener);
     return this;
