@@ -42,6 +42,7 @@
 
 .antiscroll-inner {
   overflow: scroll;
+  -ms-overflow-style: none;
 }
 
 /** A bug in Chrome 25 on Lion requires each selector to have their own
