@@ -6,8 +6,10 @@
 
   $.fn.antiscroll = function (options) {
     return this.each(function () {
-      if ($(this).data('antiscroll')) {
-        $(this).data('antiscroll').destroy();
+      var antiscroll = $(this).data('antiscroll');
+      if (antiscroll) {
+        antiscroll.inner.attr('style', '');
+        antiscroll.destroy();
       }
 
       $(this).data('antiscroll', new $.Antiscroll(this, options));
