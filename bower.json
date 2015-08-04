@@ -1,6 +1,6 @@
 {
   "name": "antiscroll",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": ["antiscroll.css", "antiscroll.js"],
   "description": "Cross-browser native OSX Lion scrollbars",
   "license": "MIT",

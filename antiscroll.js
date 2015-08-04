@@ -141,9 +141,12 @@
     this.innerPaneScrollListener = $.proxy(this, 'scroll');
     this.pane.inner.scroll(this.innerPaneScrollListener);
 
+    // OVERRIDE
+    // We are using our own listeners for mousewheel and don't want this capturing the event
     // wheel -optional-
-    this.innerPaneMouseWheelListener = $.proxy(this, 'mousewheel');
-    this.pane.inner.bind('mousewheel', this.innerPaneMouseWheelListener);
+    // this.innerPaneMouseWheelListener = $.proxy(this, 'mousewheel');
+    // this.pane.inner.bind('mousewheel', this.innerPaneMouseWheelListener);
+    // /OVERRIDE
 
     // show
     var initialDisplay = this.pane.options.initialDisplay;
