@@ -1,3 +1,9 @@
+/*
+ * Antiscroll: cross-browser native OS X Lion scrollbars
+ * https://github.com/Automattic/antiscroll
+ * v0.9
+ */
+
 (function ($) {
 
   /**
