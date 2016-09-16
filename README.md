@@ -1,4 +1,4 @@
-# Antiscroll: cross-browser native OSX Lion scrollbars
+# Antiscroll: cross-browser native OS X Lion scrollbars
 
 Antiscroll fixes a fundamental problem JavaScript UI developers commonly face:
 how do I customize scrollbars so that they get out of the way (for example, for
@@ -73,7 +73,7 @@ In order to measure scrollbars width we use the following technique:
 2. Force `overflow: scroll`
 3. Measure the inner width. The difference is the scrollbar width
 
-The caveat of this technique is precisely OSX Lion. Since the scrollbars
+The caveat of this technique is precisely OS X Lion. Since the scrollbars
 _float_ on top of the content, their width is always zero but they still
 overlay your content. To address this issue we add an aditional step which
 consists of declaring `::-webkit-scrollbar` and `::scrollbar` CSS
