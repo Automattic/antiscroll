@@ -49,6 +49,31 @@
       , 'height': '+=' + (this.x ? scrollbarSize() : 0)
     });
 
+    /* Handle `fixed` positioned divs */
+    if ( this.el.css("position") === "fixed" ) {
+      if ( this.y ) {
+        if ( !isNaN(parseInt(this.inner.css("right"))) ) {
+          var newRight = parseFloat(this.inner.css("right")) - scrollbarSize();
+          this.inner.css("right", newRight + "px");
+        }
+        else if ( !isNaN(parseInt(this.inner.css("left"))) ) {
+          var newLeft = parseFloat(this.inner.css("left")) - scrollbarSize();
+          this.inner.css("left", newLeft + "px");
+        }
+      }
+
+      if ( this.x ) {
+        if ( !isNaN(parseInt(this.inner.css("top"))) ) {
+          var newTop = parseFloat(this.inner.css("top")) - scrollbarSize();
+          this.inner.css("top", newTop + "px");
+        }
+        else if ( !isNaN(parseInt(this.inner.css("bottom"))) ) {
+          var newBottom = parseFloat(this.inner.css("bottom")) - scrollbarSize();
+          this.inner.css("bottom", newBottom + "px");
+        } 
+      }
+    }
+
     this.refresh();
   };
 
