@@ -12,8 +12,10 @@
 
   $.fn.antiscroll = function (options) {
     return this.each(function () {
-      if ($(this).data('antiscroll')) {
-        $(this).data('antiscroll').destroy();
+      var antiscroll = $(this).data('antiscroll');
+      if (antiscroll) {
+        antiscroll.inner.attr('style', '');
+        antiscroll.destroy();
       }
 
       $(this).data('antiscroll', new $.Antiscroll(this, options));
@@ -145,9 +147,12 @@
     this.innerPaneScrollListener = $.proxy(this, 'scroll');
     this.pane.inner.scroll(this.innerPaneScrollListener);
 
+    // OVERRIDE
+    // We are using our own listeners for mousewheel and don't want this capturing the event
     // wheel -optional-
-    this.innerPaneMouseWheelListener = $.proxy(this, 'mousewheel');
-    this.pane.inner.bind('mousewheel', this.innerPaneMouseWheelListener);
+    // this.innerPaneMouseWheelListener = $.proxy(this, 'mousewheel');
+    // this.pane.inner.bind('mousewheel', this.innerPaneMouseWheelListener);
+    // /OVERRIDE
 
     // show
     var initialDisplay = this.pane.options.initialDisplay;
@@ -457,16 +462,22 @@
 
   function scrollbarSize () {
     if (size === undefined) {
-      var div = $(
-          '<div class="antiscroll-inner" style="width:50px;height:50px;overflow-y:scroll;'
-        + 'position:absolute;top:-200px;left:-200px;"><div style="height:100px;width:100%"/>'
-        + '</div>'
-      );
+      var $div = $('<div class="antiscroll-inner"></div>');
+      var $innerDiv = $('<div />');
+      $div.css({
+        width: '50px',
+        height: '50px',
+        overflowY: 'scroll',
+        position: 'absolute',
+        top: '-200px',
+        left: '-200px',
+      });
+      $div.append($innerDiv);
 
-      $('body').append(div);
-      var w1 = $(div).innerWidth();
-      var w2 = $('div', div).innerWidth();
-      $(div).remove();
+      $('body').append($div);
+      var w1 = $div.innerWidth();
+      var w2 = $('div', $div).innerWidth();
+      $div.remove();
 
       size = w1 - w2;
     }
