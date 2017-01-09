@@ -43,7 +43,7 @@
     this.autoHide = false !== this.options.autoHide;
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
 
-    this.inner = this.el.find('.antiscroll-inner');
+    this.inner = this.el.find('> .antiscroll-inner');
     this.inner.css({
         'width':  '+=' + (this.y ? scrollbarSize() : 0)
       , 'height': '+=' + (this.x ? scrollbarSize() : 0)
