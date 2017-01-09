@@ -42,6 +42,7 @@
     this.y = (false !== this.options.y) || this.options.forceVertical;
     this.autoHide = false !== this.options.autoHide;
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
+    this.autoShow = undefined == this.options.autoShow ? true : this.options.autoShow;
 
     this.inner = this.el.find('.antiscroll-inner');
     this.inner.css({
@@ -181,8 +182,10 @@
    */
 
   Scrollbar.prototype.mouseenter = function () {
-    this.enter = true;
-    this.show();
+    if (this.pane.autoShow) {
+      this.enter = true;
+      this.show();
+    }
   };
 
   /**
