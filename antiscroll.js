@@ -30,7 +30,7 @@
    * Antiscroll pane constructor.
    *
    * @param {Element|jQuery} main pane
-   * @parma {Object} options
+   * @param {Object} options
    * @api public
    */
 
